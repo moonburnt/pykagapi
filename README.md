@@ -7,12 +7,13 @@ Well, long story short - its python bindings (or something like that) to kag's o
 **Example Usage:**
 
 Getting the list of servers with players on them:
-
-`import pykagapi
+```python
+import pykagapi
 
 api = pykagapi.KAG_API()
 servers = api.get_active_servers()
-print(servers)`
+print(servers)
+```
 
 **Unimplemented features**:
 

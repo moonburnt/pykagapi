@@ -115,7 +115,7 @@ class KAG_API:
         url = "{}/game/1/servers/filterinfo".format(self.siteurl)
         data = requests.get(url, timeout = self.timeout)
         pydata = json.loads(data.text)
-        return pydata
+        return pydata['serverListFilterFields']
 
     def get_servers(self, filters=None):
         '''Optionally receives list(filters). Returns list with matching servers (or all known servers, if used without filter). May take a while to process'''

@@ -2,18 +2,28 @@
 
 **Description:**
 
-Well, long story short - its python bindings (or something like that) to kag's official api (may add support for [kagstats api](https://github.com/Harrison-Miller/kagstats) later). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required required.
+Well, long story short - its python bindings (or something like that) to official api of King Arhur's Gold (may add support for [kagstats api](https://github.com/Harrison-Miller/kagstats) later). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required.
+
+**Dependencies:**
+
+- python 3.7+ (may work on previous versions, didnt test)
+- python-requests
 
 **Example Usage:**
 
-Getting the list of servers with players on them:
+Getting game's description:
 ```python
 import pykagapi
 
 api = pykagapi.KAG_API()
-servers = api.get_active_servers()
-print(servers)
+gameinfo = api.get_game_info()
+description = gameinfo['description']
+print(description)
 ```
+
+Output:
+
+`KAG is a 2D cooperative war game played with up to 32 players. Play as Knight, Archer or Builder in a large medieval world with physics allowing the construction (and destruction!) of medieval fortresses.`
 
 **Unimplemented features**:
 

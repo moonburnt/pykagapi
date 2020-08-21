@@ -154,4 +154,4 @@ class KAG_API:
         return data.content
 
 if __name__ == "__main__":
-    print("This is the library, its not intended to be used directly.\nCheck project's github page for info about general usage:\nhttps://github.com/moonburnt/pykagapi/")
+    print("This is the library, its not intended to be used directly.\nCheck project's wiki for info about general usage:\nhttps://github.com/moonburnt/pykagapi/wiki")

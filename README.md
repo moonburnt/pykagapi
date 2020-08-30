@@ -2,7 +2,7 @@
 
 **Description:**
 
-Well, long story short - its python bindings (or something like that) to official api of King Arhur's Gold (may add support for [kagstats api](https://github.com/Harrison-Miller/kagstats) later). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required.
+Well, long story short - its python bindings (or something like that) to official api of King Arhur's Gold (may add support for [kagstats api](https://github.com/Harrison-Miller/kagstats) later). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required. Or, well, use it as reference while writing your own code - WTFPL license is equal to public domain, meaning Im perfectly fine with other people copypasting parts of this lib
 
 **Dependencies:**
 
@@ -11,25 +11,22 @@ Well, long story short - its python bindings (or something like that) to officia
 
 **Example Usage:**
 
-Getting game's description:
+Getting amount of active servers:
 ```python
 import pykagapi
 
 api = pykagapi.KAG_API()
-gameinfo = api.get_game_info()
-description = gameinfo['description']
-print(description)
+servers = api.get_active_servers()
+print("There are currently {} servers with players on them!".format(len(servers)))
 ```
 
-Output:
+Example output:
 
-`KAG is a 2D cooperative war game played with up to 32 players. Play as Knight, Archer or Builder in a large medieval world with physics allowing the construction (and destruction!) of medieval fortresses.`
+`There are currently 6 servers with players on them!`
 
 **Unimplemented features**:
 
-- [Devgroups](https://developers.thd.vg/api/devgroups.html), because I dont have access to these to check if these are working
-- [Put server status](https://developers.thd.vg/api/servers.html#put--game-(gamedev)-(game)-server-(ip)-(int-port)-status) and [put minimap](https://developers.thd.vg/api/servers.html#put--game-(gamedev)-(game)-server-(ip)-(int-port)-minimap) - for same reasons
-- [Mods stuff](https://developers.thd.vg/api/mods.html), because nobody bothers to register mods anymore
+- Everything that isnt "get" requests, because Im just a regular player and dont have ability to upload or remove anything (most of [devgroups](https://developers.thd.vg/api/devgroups.html), [put server status](https://developers.thd.vg/api/servers.html#put--game-(gamedev)-(game)-server-(ip)-(int-port)-status) and [put minimap](https://developers.thd.vg/api/servers.html#put--game-(gamedev)-(game)-server-(ip)-(int-port)-minimap), few entries from [mods stuff](https://developers.thd.vg/api/mods.html) used to upload mods and verify them)
 - /terms/status and /receiveemails/status from [players](https://developers.thd.vg/api/players.html) - these seem to be broken
 - "start" and "limit" for server info requests
 

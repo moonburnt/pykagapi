@@ -1,4 +1,4 @@
-# Python bindings for official kag api. I dont know why it exists
+## Python bindings for official kag api. Was made to serve as library, but feel free to use it as reference or whatever
 import requests
 import json
 
@@ -152,6 +152,49 @@ class KAG_API:
         url = "{}/game/thd/kag/server/{}/{}/minimap".format(self.siteurl, ip, port)
         data = requests.get(url, timeout = self.timeout)
         return data.content
+
+    def get_mod_info(self, moddev, modname):
+        '''Receives str(name of developer) and str(name of mod), returns dictionary(info about this particular mod)'''
+        url = "{}/game/thd/kag/mod/{}/{}/info".format(self.siteurl, moddev, modname)
+        data = requests.get(url, timeout = self.timeout)
+        pydata = json.loads(data.text)
+        return pydata['modInfo']
+
+    def get_mod(self, moddev, modname):
+        '''Receives str(name of developer) and str(name of mod), returns mod's tar.gz archive (not as link, but as bytes. Write it into file or something)'''
+        url = "{}/game/thd/kag/mod/{}/{}/full".format(self.siteurl, moddev, modname)
+        data = requests.get(url, timeout = self.timeout)
+        return data.text
+
+    def get_mod_server(self, moddev, modname):
+        '''Receives str(name of developer) and str(name of mod), returns tar.gz archive with mod's server files'''
+        url = "{}/game/thd/kag/mod/{}/{}/server".format(self.siteurl, moddev, modname)
+        data = requests.get(url, timeout = self.timeout)
+        return data.text
+
+    def get_mod_client(self, moddev, modname):
+        '''Receives str(name of developer) and str(name of mod), returns tar.gz archive with mod's client files'''
+        url = "{}/game/thd/kag/mod/{}/{}/client".format(self.siteurl, moddev, modname)
+        data = requests.get(url, timeout = self.timeout)
+        return data.text
+
+    def get_mod_list(self, filters = None):
+        '''Optionally receives list(filters), returns list with matching (or all, if nothing has been passed) registered mods (but nobody bothers to do that anymore, so its not that long)'''
+        if filters:
+            jfilters = json.dumps(filters)
+            url = self.siteurl+'/game/thd/kag/mods?filters='+jfilters
+        else:
+            url = "{}/game/thd/kag/mods".format(self.siteurl)
+        data = requests.get(url, timeout = self.timeout)
+        pydata = json.loads(data.text)
+        return pydata['modList']
+
+    def get_mod_filters(self):
+        '''Returns list of valid filters to be used with get_mod_list()'''
+        url = "{}/game/thd/kag/mods/filterinfo".format(self.siteurl)
+        data = requests.get(url, timeout = self.timeout)
+        pydata = json.loads(data.text)
+        return pydata['modListFilterFields']
 
 if __name__ == "__main__":
     print("This is the library, its not intended to be used directly.\nCheck project's wiki for info about general usage:\nhttps://github.com/moonburnt/pykagapi/wiki")

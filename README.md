@@ -2,7 +2,7 @@
 
 **Description:**
 
-Well, long story short - its python bindings (or something like that) to official api of King Arhur's Gold (may add support for [kagstats api](https://github.com/Harrison-Miller/kagstats) later). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required. Or, well, use it as reference while writing your own code - WTFPL license is equal to public domain, meaning Im perfectly fine with other people copypasting parts of this lib
+Well, long story short - its python wrapper (or something like that) to official api of King Arhur's Gold (may add support for [kagstats api](https://github.com/Harrison-Miller/kagstats) later). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required. Or, well, use it as reference while writing your own code - WTFPL license is equal to public domain, meaning Im perfectly fine with other people copypasting parts of this lib
 
 **Dependencies:**
 

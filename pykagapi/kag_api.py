@@ -1,28 +1,27 @@
-## Python bindings for official kag api. Was made to serve as library, but feel free to use it as reference or whatever
 import requests
 import json
+import logging
 
-#now raising exceptions if response isnt 200
-#f-strings instead of format()
+log = logging.getLogger(__name__)
 
 class KAG_API:
-    '''Class containing functions related to obtaining data from official api of King Arthur's Gold'''
+    '''Class containing functions related to obtaining data from official api of King Arthur's Gold hosted on https://api.kag2d.com/v1'''
     def __init__(self):
         #API url
-        self.siteurl = "https://api.kag2d.com/v1"
+        self.api_url = "https://api.kag2d.com/v1"
         #default timeout for requests
         self.timeout = 30
 
     def get_api_info(self):
         '''Returns dictionary with general info about this api'''
-        data = requests.get(self.siteurl, timeout = self.timeout)
+        data = requests.get(self.api_url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
         return pydata
 
     def get_game_info(self):
         '''Returns dictionary with general info about KAG'''
-        url = f"{self.siteurl}/game/thd/kag"
+        url = f"{self.api_url}/game/thd/kag"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -31,7 +30,7 @@ class KAG_API:
     #Player shenanigans
     def get_player_overall_info(self, nickname):
         '''Receives player's nickname (str), returns dictionary with player's overall info'''
-        url = f"{self.siteurl}/player/{nickname}"
+        url = f"{self.api_url}/player/{nickname}"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -39,7 +38,7 @@ class KAG_API:
 
     def get_player_info(self, nickname):
         '''Receives player's nickname (str), returns dictionary with player's general info'''
-        url = f"{self.siteurl}/player/{nickname}/info"
+        url = f"{self.api_url}/player/{nickname}/info"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -47,7 +46,7 @@ class KAG_API:
 
     def get_player_status(self, nickname):
         '''Receives player's nickname (str), returns dictionary with player's status'''
-        url = f"{self.siteurl}/player/{nickname}/status"
+        url = f"{self.api_url}/player/{nickname}/status"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -55,7 +54,7 @@ class KAG_API:
 
     def get_player_banflags(self, nickname):
         '''Receives player's nickname (str), returns dictionary with player's banflags'''
-        url = f"{self.siteurl}/player/{nickname}/banflags"
+        url = f"{self.api_url}/player/{nickname}/banflags"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -65,7 +64,7 @@ class KAG_API:
         '''Receives your (unless you are admin) login, password, nickname (strs), returns dictionary with private info'''
         if not nickname:
             nickname = login
-        url = f"{self.siteurl}/player/{nickname}/myinfo"
+        url = f"{self.api_url}/player/{nickname}/myinfo"
         data = requests.get(url, auth=(login, password), timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -75,7 +74,7 @@ class KAG_API:
         '''Receives your (unless you are admin) login, password, nickname (strs), returns dictionary with private forum info'''
         if not nickname:
             nickname = login
-        url = f"{self.siteurl}/player/{nickname}/foruminfo"
+        url = f"{self.api_url}/player/{nickname}/foruminfo"
         data = requests.get(url, auth=(login, password), timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -83,14 +82,14 @@ class KAG_API:
 
     def get_player_avatar(self, nickname, size="m"):
         '''Receives player's nickname and avatar size ("s", "m" or "l") (all strs), returns str link to pfp of that size'''
-        url = f"{self.siteurl}/player/{nickname}/avatar/{size}"
+        url = f"{self.api_url}/player/{nickname}/avatar/{size}"
         data = requests.get(url, timeout = self.timeout)
         pydata = json.loads(data.text)
         return str(list(pydata.values())[0])
 
     def get_player_avatars(self, nickname):
         '''Receives str(nickname), returns dictionary with links to large, medium and small pfps'''
-        url = f"{self.siteurl}/player/{nickname}/avatar/"
+        url = f"{self.api_url}/player/{nickname}/avatar/"
         data = requests.get(url, timeout = self.timeout)
         pydata = json.loads(data.text)
         return pydata
@@ -98,7 +97,7 @@ class KAG_API:
     #Token shenanigans
     def get_token(self, login, password):
         '''Receives player's login and password (str), returns player's authentication token (str)'''
-        url = f"{self.siteurl}/player/{login}/token/new"
+        url = f"{self.api_url}/player/{login}/token/new"
         data = requests.get(url, auth=(login, password), timeout = self.timeout)
         pydata = json.loads(data.text)
         return str(pydata['playerToken'])
@@ -106,7 +105,7 @@ class KAG_API:
     def verify_token(self, username, token):
         #'''Receives username and token. Verifies if token is valid for that person. Returns True if its valid or False otherwise'''
         '''Receives username and token. Verifies if token is valid for that person. Returns True if its valid'''
-        url = f"{self.siteurl}/player/{username}/token/{token}"
+        url = f"{self.api_url}/player/{username}/token/{token}"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         #status = data.status_code
@@ -118,7 +117,7 @@ class KAG_API:
 
     def get_ip(self):
         '''Receive your IP (str) from kag api'''
-        url = f"{self.siteurl}/myip"
+        url = f"{self.api_url}/myip"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -126,7 +125,7 @@ class KAG_API:
 
     def get_filters(self):
         '''Receive dic(info) with valid filters used in server-related requests'''
-        url = f"{self.siteurl}/game/1/servers/filterinfo"
+        url = f"{self.api_url}/game/1/servers/filterinfo"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -136,10 +135,10 @@ class KAG_API:
         '''Optionally receives list(filters). Returns list with matching servers (or all known servers, if used without filter). May take a while to process'''
         if filters:
             jfilters = json.dumps(filters)
-            #url = self.siteurl+'/game/1/servers?filters='+jfilters
-            url = f"{self.siteurl}/game/1/servers?filters={jfilters}"
+            #url = self.api_url+'/game/1/servers?filters='+jfilters
+            url = f"{self.api_url}/game/1/servers?filters={jfilters}"
         else:
-            url = f"{self.siteurl}/game/1/servers"
+            url = f"{self.api_url}/game/1/servers"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -159,7 +158,7 @@ class KAG_API:
 
     def get_server_status(self, ip, port):
         '''Receives str(ip) and int(port), returns dictionary with server's info'''
-        url = f"{self.siteurl}/game/thd/kag/server/{ip}/{port}/status"
+        url = f"{self.api_url}/game/thd/kag/server/{ip}/{port}/status"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -167,13 +166,13 @@ class KAG_API:
 
     def get_server_minimap(self, ip, port):
         '''Receives str(ip) and int(port), returns server's current map image in binary form (use something like Pillow+BytesIO to decode it)'''
-        url = f"{self.siteurl}/game/thd/kag/server/{ip}/{port}/minimap"
+        url = f"{self.api_url}/game/thd/kag/server/{ip}/{port}/minimap"
         data = requests.get(url, timeout = self.timeout)
         return data.content
 
     def get_mod_info(self, moddev, modname):
         '''Receives str(name of developer) and str(name of mod), returns dictionary(info about this particular mod)'''
-        url = f"{self.siteurl}/game/thd/kag/mod/{moddev}/{modname}/info"
+        url = f"{self.api_url}/game/thd/kag/mod/{moddev}/{modname}/info"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -181,21 +180,21 @@ class KAG_API:
 
     def get_mod(self, moddev, modname):
         '''Receives str(name of developer) and str(name of mod), returns mod's tar.gz archive (not as link, but as bytes. Write it into file or something)'''
-        url = f"{self.siteurl}/game/thd/kag/mod/{moddev}/{modname}/full"
+        url = f"{self.api_url}/game/thd/kag/mod/{moddev}/{modname}/full"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         return data.text
 
     def get_mod_server(self, moddev, modname):
         '''Receives str(name of developer) and str(name of mod), returns tar.gz archive with mod's server files'''
-        url = f"{self.siteurl}/game/thd/kag/mod/{moddev}/{modname}/server"
+        url = f"{self.api_url}/game/thd/kag/mod/{moddev}/{modname}/server"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         return data.text
 
     def get_mod_client(self, moddev, modname):
         '''Receives str(name of developer) and str(name of mod), returns tar.gz archive with mod's client files'''
-        url = f"{self.siteurl}/game/thd/kag/mod/{moddev}/{modname}/client"
+        url = f"{self.api_url}/game/thd/kag/mod/{moddev}/{modname}/client"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         return data.text
@@ -204,10 +203,10 @@ class KAG_API:
         '''Optionally receives list(filters), returns list with matching (or all, if nothing has been passed) registered mods (but nobody bothers to do that anymore, so its not that long)'''
         if filters:
             jfilters = json.dumps(filters)
-            #url = self.siteurl+'/game/thd/kag/mods?filters='+jfilters
-            url = f"{self.siteurl}/game/thd/kag/mods?filters={jfilters}"
+            #url = self.api_url+'/game/thd/kag/mods?filters='+jfilters
+            url = f"{self.api_url}/game/thd/kag/mods?filters={jfilters}"
         else:
-            url = f"{self.siteurl}/game/thd/kag/mods"
+            url = f"{self.api_url}/game/thd/kag/mods"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)
@@ -215,7 +214,7 @@ class KAG_API:
 
     def get_mod_filters(self):
         '''Returns list of valid filters to be used with get_mod_list()'''
-        url = f"{self.siteurl}/game/thd/kag/mods/filterinfo"
+        url = f"{self.api_url}/game/thd/kag/mods/filterinfo"
         data = requests.get(url, timeout = self.timeout)
         data.raise_for_status()
         pydata = json.loads(data.text)

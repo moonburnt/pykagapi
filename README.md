@@ -2,7 +2,7 @@
 
 # Description:
 
-Well, long story short - its python wrapper (or something like that) to King Arthurs Gold-related apis (currently has nearly full support of [official kag api](https://api.kag2d.com/v1) and partial support of [kagstats api](https://kagstats.com/api). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required. Or, well, use it as reference while writing your own code - [WTFPL license](LICENSE) is equal to public domain, meaning Im perfectly fine with other people copypasting parts of this lib into their projects
+Well, long story short - its python wrapper (or something like that) to King Arthurs Gold-related apis (currently has nearly full support of [official kag api](https://api.kag2d.com/v1) and partial support of [kagstats api](https://kagstats.com/api)). Import it as library into your code, call some function - get info you've been seeking for. No knowledge of networking libraries required. Or, well, use it as reference while writing your own code - [WTFPL license](LICENSE) is equal to public domain, meaning Im perfectly fine with other people copypasting parts of this lib into their projects
 
 # Dependencies:
 

@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 api_url = "https://api.kag2d.com/v1/game/thd/kag/mods"
 timeout = 30
 
-def list(filters = None):
+def modlist(filters = None):
     '''Optionally receives list(filters), returns list with matching (or all, if nothing has been passed) registered mods (but nobody bothers to do that anymore, so its not that long)'''
     if filters:
         log.debug(f"Attempting to get list of mods that match filters: {filters}")

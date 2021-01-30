@@ -18,7 +18,7 @@ def filters():
     log.debug(f"Gathered following data: {pydata}")
     return pydata
 
-def list(filters=None):
+def serverlist(filters=None):
     '''Optionally receives list(filters). Returns list with matching servers (or all known servers, if used without filter). May take a while to process'''
     if filters:
         log.debug(f"Attempting to get list of servers that match filters: {filters}")
@@ -32,13 +32,13 @@ def list(filters=None):
     pd = json.loads(data.text)
     pydata = pd['serverList']
     log.debug(f"Gathered info about {len(pydata)} servers")
-    return
+    return pydata
 
 def alive():
     '''Returns list with servers thats up and running. Or at least according to api'''
     log.debug(f"Attempting to get list of currently working servers")
     filters = [{'field': 'current', 'op': 'eq', 'value': True}]
-    pydata = get_servers(filters)
+    pydata = serverlist(filters)
     log.debug(f"Gathered following data: {pydata}")
     return pydata
 
@@ -46,6 +46,6 @@ def active():
     '''Returns list with servers that contain players'''
     log.debug(f"Attempting to get list of servers that currently have players")
     filters = [{'field': 'current', 'op': 'eq', 'value': True}, {'field': 'currentPlayers', 'op': 'ge', 'value': 1}]
-    pydata = get_servers(filters)
+    pydata = serverlist(filters)
     log.debug(f"Gathered following data: {pydata}")
     return pydata

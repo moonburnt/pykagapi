@@ -13,10 +13,9 @@ Well, long story short - its python wrapper (or something like that) to King Art
 
 ## Getting amount of active servers:
 ```python
-from pykagapi import kag_api
+from pykagapi import kag
 
-api = kag_api.KAG_API()
-servers = api.get_active_servers()
+servers = kag.servers.active()
 servers_amount = len(servers)
 print(f"There are currently {servers_amount} servers that have players on them!")
 ```

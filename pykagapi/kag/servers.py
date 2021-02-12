@@ -1,17 +1,19 @@
 import requests
 import json
 import logging
+from pykagapi import _config
 
 log = logging.getLogger(__name__)
 
 api_url = "https://api.kag2d.com/v1/game/1/servers"
-timeout = 30
+TIMEOUT = _config.TIMEOUT
+SESSION = _config.SESSION
 
 def filters():
     '''Receive dic(info) with valid filters used in server-related requests'''
     log.debug(f"Attempting to get info about valid filters for server requests")
     url = f"{api_url}/filterinfo"
-    data = requests.get(url, timeout = timeout)
+    data = SESSION.get(url, timeout = TIMEOUT)
     data.raise_for_status()
     pd = json.loads(data.text)
     pydata = pd['serverListFilterFields']
@@ -27,7 +29,7 @@ def serverlist(filters=None):
     else:
         log.debug(f"Attempting to get complete serverlist. May take a while")
         url = f"{api_url}"
-    data = requests.get(url, timeout = timeout)
+    data = SESSION.get(url, timeout = TIMEOUT)
     data.raise_for_status()
     pd = json.loads(data.text)
     pydata = pd['serverList']

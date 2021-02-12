@@ -1,6 +1,7 @@
 #importing all valid scripts from subfolders to make it possible to import pykagapi as a whole
 from .kag import *
 from .kagstats import *
+from ._config import *
 
 import logging
 

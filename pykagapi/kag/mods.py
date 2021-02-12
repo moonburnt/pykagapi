@@ -1,11 +1,13 @@
 import requests
 import json
 import logging
+from pykagapi import _config
 
 log = logging.getLogger(__name__)
 
 api_url = "https://api.kag2d.com/v1/game/thd/kag/mods"
-timeout = 30
+TIMEOUT = _config.TIMEOUT
+SESSION = _config.SESSION
 
 def modlist(filters = None):
     '''Optionally receives list(filters), returns list with matching (or all, if nothing has been passed) registered mods (but nobody bothers to do that anymore, so its not that long)'''
@@ -16,7 +18,7 @@ def modlist(filters = None):
     else:
         log.debug(f"Attempting to get complete modlist")
         url = f"{api_url}"
-    data = requests.get(url, timeout = timeout)
+    data = SESSION.get(url, timeout = TIMEOUT)
     data.raise_for_status()
     pd = json.loads(data.text)
     pydata = pd['modList']
@@ -27,7 +29,7 @@ def filters():
     '''Returns list of valid filters to be used with get_mod_list()'''
     log.debug(f"Attempting to get info about valid filters for mod requests")
     url = f"{api_url}/filterinfo"
-    data = requests.get(url, timeout = timeout)
+    data = SESSION.get(url, timeout = TIMEOUT)
     data.raise_for_status()
     pd = json.loads(data.text)
     pydata = pd['modListFilterFields']

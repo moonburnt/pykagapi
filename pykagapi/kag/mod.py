@@ -1,48 +1,45 @@
-import requests
-import json
 import logging
 from pykagapi import _config
 
 log = logging.getLogger(__name__)
 
-api_url = "https://api.kag2d.com/v1/game/thd/kag/mod"
-TIMEOUT = _config.TIMEOUT
-SESSION = _config.SESSION
+API_URL = "https://api.kag2d.com/v1/game/thd/kag/mod"
+get_dictionary = _config.get_dictionary
+get_data = _config.get_data
 
 def info(moddev, modname):
-    '''Receives name of developer and name of mod, returns dictionary(info about this particular mod)'''
+    '''Receives name of developer and name of mod.
+    Returns dictionary(info about this particular mod)'''
     log.debug(f"Attempting to get information about {moddev}'s {modname} mod")
-    url = f"{api_url}/{moddev}/{modname}/info"
-    data = SESSION.get(url, timeout = TIMEOUT)
-    data.raise_for_status()
-    pd = json.loads(data.text)
+    url = f"{API_URL}/{moddev}/{modname}/info"
+    pd = get_dictionary(url)
     pydata = pd['modInfo']
     log.debug(f"Gathered following data: {pydata}")
     return pydata
 
 def files(moddev, modname):
-    '''Receives name of developer and name of mod, returns mod's tar.gz archive (not as link, but as bytes. Write it into file or something)'''
+    '''Receives name of developer and name of mod.
+    Returns binary version of tar.gz archive with mod's files'''
     log.debug(f"Attempting to fetch files of {moddev}'s {modname} mod")
-    url = f"{api_url}/{moddev}/{modname}/full"
-    data = SESSION.get(url, timeout = TIMEOUT)
-    data.raise_for_status()
+    url = f"{API_URL}/{moddev}/{modname}/full"
+    data = get_data(url)
     log.debug(f"Successfully retrieved all files in binary form")
-    return data.text
+    return data
 
 def server_files(moddev, modname):
-    '''Receives name of developer and name of mod, returns binary version of tar.gz archive with mod's server files'''
+    '''Receives name of developer and name of mod.
+    Returns binary version of tar.gz archive with mod's server files'''
     log.debug(f"Attempting to fetch server files of {moddev}'s {modname} mod")
-    url = f"{api_url}/{moddev}/{modname}/server"
-    data = SESSION.get(url, timeout = TIMEOUT)
-    data.raise_for_status()
+    url = f"{API_URL}/{moddev}/{modname}/server"
+    data = get_data(url)
     log.debug(f"Successfully retrieved all files in binary form")
-    return data.text
+    return data
 
 def client_files(moddev, modname):
-    '''Receives name of developer and name of mod, returns binary version of tar.gz archive with mod's client files'''
+    '''Receives name of developer and name of mod.
+    Returns binary version of tar.gz archive with mod's client files'''
     log.debug(f"Attempting to fetch client files of {moddev}'s {modname} mod")
-    url = f"{api_url}/{moddev}/{modname}/client"
-    data = SESSION.get(url, timeout = TIMEOUT)
-    data.raise_for_status()
+    url = f"{API_URL}/{moddev}/{modname}/client"
+    data = get_data(url)
     log.debug(f"Successfully retrieved all files in binary form")
-    return data.text
+    return data

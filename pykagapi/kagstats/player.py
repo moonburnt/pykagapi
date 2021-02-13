@@ -40,7 +40,7 @@ def captures(player_id):
     log.debug(f"Attempting to get info about flags captured by {player_id}")
     url = f"{API_URL}/{player_id}/captures"
     pd = get_dictionary(url)
-    pydata = pd['captures']
+    pydata = int(pd['captures'])
     log.debug(f"Gathered following data: {pydata}")
     return pydata
 
@@ -70,5 +70,36 @@ def stats_by_name(player_name):
     log.debug(f"Attempting to get stats of player under name {player_name}")
     url = f"{API_URL}/lookup/{player_name}"
     pydata = get_dictionary(url)
+    log.debug(f"Gathered following data: {pydata}")
+    return pydata
+
+def top_weapons(player_id):
+    '''Receives player id as str or int.
+    Returns list with top of this player's weapons and amount fo kills with each'''
+    #todo: get list of hitters and replace IDs with human-readable names
+    log.debug(f"Attempting to get top weapons of {player_id}")
+    url = f"{API_URL}/{player_id}/hitters"
+    pd = get_dictionary(url)
+    pydata = pd['hitters']
+    log.debug(f"Gathered following data: {pydata}")
+    return pydata
+
+def nemesis(player_id):
+    '''Receives player id as str or int.
+    Returns dictionary with player's nemesis and amount of deaths to them'''
+    log.debug(f"Attempting to get nemesis of {player_id}")
+    url = f"{API_URL}/{player_id}/nemesis"
+    pydata = get_dictionary(url)
+    log.debug(f"Gathered following data: {pydata}")
+    return pydata
+
+def bullied(player_id):
+    '''Receives player id as str or int.
+    Returns list with people whom got bullied by that player.
+    Including info of each and amount of deaths to player'''
+    log.debug(f"Attempting to get nemesis of {player_id}")
+    url = f"{API_URL}/{player_id}/bullied"
+    pd = get_dictionary(url)
+    pydata = pd['bullied']
     log.debug(f"Gathered following data: {pydata}")
     return pydata

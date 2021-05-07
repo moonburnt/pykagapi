@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 with open("README.md") as f:
     long_description = f.read()
@@ -12,7 +12,8 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/moonburnt/pykagapi",
-    author="moonburnt <moonburnt@disroot.org",
+    author="moonburnt",
+    author_email="moonburnt@disroot.org",
     license="WTFPL",
     classifiers=["Programming Language :: Python :: 3"],
     packages=find_packages(),

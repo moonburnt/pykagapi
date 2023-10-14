@@ -1,9 +1,14 @@
-from .kills import *
-from .player import *
-from .server import *
-from .leaderboard import *
-from .misc import *
+from .client import *
 
-import logging
 
-logging.getLogger(__name__).addHandler(logging.NullHandler())
+# Shared instance for sake of simplicity.
+# Feel free to don't use it, if you don't want to
+_client = None
+
+
+def get_client():
+    global _client
+    if _client is None:
+        _client = KagStatsAPIClient()
+
+    return _client

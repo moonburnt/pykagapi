@@ -1,13 +1,14 @@
-#making all valid modules visible to those who do "from pykagapi import kag"
-#dot before name specifies that module takes place in same directory
+from .client import *
+from .extra import *
 
-from .player import *
-from .servers import *
-from .server import *
-from .mod import *
-from .mods import *
-from .misc import *
+# Shared instance for sake of simplicity.
+# Feel free to don't use it, if you don't want to
+_client = None
 
-import logging
 
-logging.getLogger(__name__).addHandler(logging.NullHandler())
+def get_client():
+    global _client
+    if _client is None:
+        _client = KagAPIClient()
+
+    return _client

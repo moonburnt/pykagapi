@@ -1,31 +1,31 @@
 from typing import Optional, Tuple, List, Dict, Literal
-from .client import KagAPIClient
+from .async_client import AsyncKagAPIClient
 
-# Helper methods for api client
+# Helper methods for async api client
 
 
-def get_alive_servers(
-    api_client: KagAPIClient,
+async def get_alive_servers(
+    api_client: AsyncKagAPIClient,
     # limit: Optional[int] = None,
     # start: Optional[int] = None,
 ) -> dict:
     """Get currently running servers."""
 
-    return api_client.get_servers(
+    return await api_client.get_servers(
         filters=[{"field": "current", "op": "eq", "value": True}],
         # limit=limit,
         # start=start,
     )
 
 
-def get_active_servers(
-    api_client: KagAPIClient,
+async def get_active_servers(
+    api_client: AsyncKagAPIClient,
     # limit: Optional[int] = None,
     # start: Optional[int] = None,
 ):
     """Get servers with players on them"""
 
-    return api_client.get_servers(
+    return await api_client.get_servers(
         filters=[
             {"field": "current", "op": "eq", "value": True},
             {"field": "currentPlayers", "op": "ge", "value": 1},

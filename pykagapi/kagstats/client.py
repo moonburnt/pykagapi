@@ -23,10 +23,11 @@ class KagStatsAPIClient(APIClient):
 
         return self._get(self.base_endpoints["kills"]).json()
 
-    def get_kills_info(self, kill_id: int) -> dict:
-        """Get info about specific kill."""
+    # Seemingly broken: https://github.com/Harrison-Miller/kagstats/issues/50
+    # def get_kills_info(self, kill_id: int) -> dict:
+    #     """Get info about specific kill."""
 
-        return self._get(f"{self.base_endpoints['kills']}/{kill_id}").json()
+    #     return self._get(f"{self.base_endpoints['kills']}/{kill_id}").json()
 
     def get_leaderboard(self) -> dict:
         """Get top-20 players based on their overall KDR."""
@@ -74,6 +75,13 @@ class KagStatsAPIClient(APIClient):
             f"{self.base_endpoints['leaderboard']}/monthly/knight"
         ).json()
 
+    def get_players(self) -> dict:
+        """Get list of players known to API.
+        May take a while.
+        """
+
+        return self._get(self.base_endpoints["players"]).json()
+
     def get_players_info(self, player_id: int) -> dict:
         """Get player info."""
 
@@ -86,12 +94,13 @@ class KagStatsAPIClient(APIClient):
             f"{self.base_endpoints['players']}/{player_id}/kills"
         ).json()
 
-    def get_players_events(self, player_id: int) -> dict:
-        """Get player's recent events."""
+    # Seemingly deprecated
+    # def get_players_events(self, player_id: int) -> dict:
+    #     """Get player's recent events."""
 
-        return self._get(
-            f"{self.base_endpoints['players']}/{player_id}/events"
-        ).json()
+    #     return self._get(
+    #         f"{self.base_endpoints['players']}/{player_id}/events"
+    #     ).json()
 
     def get_players_captures(self, player_id: int) -> dict:
         """Get player's flag captures."""
@@ -100,7 +109,7 @@ class KagStatsAPIClient(APIClient):
             f"{self.base_endpoints['players']}/{player_id}/captures"
         ).json()
 
-    def find(self, username: str) -> dict:
+    def get_players_lookup(self, username: str) -> dict:
         """Find players matching provided name (or part of it)"""
 
         return self._get(
@@ -152,31 +161,28 @@ class KagStatsAPIClient(APIClient):
 
         return self._get(f"{self.base_endpoints['root']}/maps").json()
 
-    def get_maps(self) -> dict:
-        """Get map-related statistics."""
-
-        return self._get(f"{self.base_endpoints['root']}/maps").json()
-
     def get_servers(self) -> dict:
         """Get active servers."""
 
-        return self.get(self.base_endpoints["servers"]).json()
+        return self._get(self.base_endpoints["servers"]).json()
 
     def get_servers_info(self, server_id: int) -> dict:
         """Get detailed info of the selected server."""
 
-        return self.get(f"{self.base_endpoints['servers']}/{server_id}").json()
+        return self._get(f"{self.base_endpoints['servers']}/{server_id}").json()
 
-    def get_servers_events(self, server_id: int) -> dict:
-        """Get recent server's events."""
+    # Seemingly deprecated
+    # def get_servers_events(self, server_id: int) -> dict:
+    #     """Get recent server's events."""
 
-        return self.get(
-            f"{self.base_endpoints['servers']}/{server_id}/events"
-        ).json()
+    #     return self._get(
+    #         f"{self.base_endpoints['servers']}/{server_id}/events"
+    #     ).json()
 
-    def get_servers_kills(self, server_id: int) -> dict:
-        """Get recent server's kills."""
+    # Broken atm, see player kills issue above
+    # def get_servers_kills(self, server_id: int) -> dict:
+    #     """Get recent server's kills."""
 
-        return self.get(
-            f"{self.base_endpoints['servers']}/{server_id}/kills"
-        ).json()
+    #     return self._get(
+    #         f"{self.base_endpoints['servers']}/{server_id}/kills"
+    #     ).json()

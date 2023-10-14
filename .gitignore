@@ -1,0 +1,8 @@
+__pycache__
+TODO
+test.py
+pykagapi.egg-info
+dist/**
+build/**
+.venv/**
+tests/**

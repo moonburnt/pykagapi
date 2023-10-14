@@ -2,13 +2,14 @@
 
 ## Description:
 
-*pykagapi* - is a python wrapper for King Arthurs Gold-related apis ([kag api v1](https://api.kag2d.com/v1) and [kagstats api](https://kagstats.com/api)).
+*pykagapi* - a python wrapper for King Arthurs Gold-related apis ([kag api v1](https://api.kag2d.com/v1) and [kagstats api](https://kagstats.com/api)).
 Use it as you please.
 
 ## Dependencies:
 
-- python 3.10 (may work on previous versions, didnt test)
+- python 3.10+
 - requests
+- aiohttp (for async client)
 
 ## Example Usage:
 
@@ -19,6 +20,19 @@ from pykagapi import kag
 
 with kag.get_client() as c:
     print(c.get_api_info())
+```
+
+### Getting general api info asynchroniously:
+
+```python
+from pykagapi import kag
+import asyncio
+
+async def main():
+    async with kag.get_async_client() as c:
+        print(await c.get_api_info())
+
+asyncio.run(main())
 ```
 
 ### Getting amount of currently active servers:
@@ -44,7 +58,6 @@ Example output:
 
 ### KAGSTATS API:
 
-- `https://kagstats.com/api/players`, because there are few thousand players known to database. Do you really need to get them all?
 - `https://kagstats.com/api/players/{id}/refresh`, because it doesnt seem to do anything
 - Whatever I didnt notice while casually reading [api's source codes](https://github.com/Harrison-Miller/kagstats/tree/master/api)
 
@@ -52,8 +65,9 @@ Example output:
 ## TODO:
 
 - Support for non-GET requests
-- Async clients
 - Automated tests
+- Support for "limit"/"start" in list views of kagstats api
+- Make async client optional
 
 ## LICENSE:
 

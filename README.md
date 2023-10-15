@@ -2,14 +2,27 @@
 
 ## Description:
 
-*pykagapi* - a python wrapper for King Arthurs Gold-related apis ([kag api v1](https://api.kag2d.com/v1) and [kagstats api](https://kagstats.com/api)).
-Use it as you please.
+*pykagapi* - a python wrapper for King Arthurs Gold-related APIs ([KAG API v1](https://api.kag2d.com/v1) and [KAG Stats API](https://kagstats.com/api)).
+Use it as you please, feel free to contribute!
 
 ## Dependencies:
 
 - python 3.10+
 - requests
 - aiohttp (for async client)
+
+## Installation:
+
+### From source:
+
+- Install [poetry](https://python-poetry.org/docs/#installation)
+- Clone this repo: `git clone https://github.com/moonburnt/pykagapi.git`
+- Enter project's directory: `cd pykagapi`
+- `poetry install`
+
+### From pypi:
+
+- `pip install pykagapi`
 
 ## Example Usage:
 
@@ -71,4 +84,4 @@ Example output:
 
 ## LICENSE:
 
-[WTFPL](LICENSE)
+[MIT](LICENSE)

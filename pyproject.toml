@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "pykagapi"
-version = "0.3.0"
+version = "0.4.0"
 description = "pykagapi - python wrapper for King Arthur's Gold-related APIs"
 authors = ["moonburnt <moonburnt@disroot.org>"]
-license = "LICENSE"
+license = "MIT"
 homepage = "https://github.com/moonburnt/pykagapi"
 readme = "README.md"
 
